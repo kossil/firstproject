@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link rel="stylesheet" href="resources/dijit/themes/claro/claro.css" >
+    <script> dojoConfig = {parseOnLoad: true}</script>
+    <script src='resources/dojo/dojo.js'></script>
+
+    <!--<style class="igm"> body{-->
+        <!--background-color:black;-->
+    <!--}-->
+    <!--</style>>-->
+</head>
+<body class="claro">
+<script>
+
+    dojo.require("dijit.form.Button");
+    dojo.require("dijit.form.TextBox");
+    dojo.require("dijit.form.CheckBox");
+
+</script>
+<br>
+<blockquote>
+    <form action="/send" id="myform" method="post" >
+
+        <label for="selectdepartment">Выберите отдел:</label>
+        <select name="selectdepartment" id="selectdepartment" data-dojo-type="dijit/form/Select">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+
+        <br>
+        <br>
+        <br>
+
+        <label for="date1">Результаты от:</label>
+        <input type="text" name="date1" id="date1" th:value="*{date1}"
+               data-dojo-type="dijit/form/DateTextBox"
+               required="true" />
+
+        <br>
+        <br>
+        <br>
+        <label for="date2">Результаты до:</label>
+        <input type="text" name="date2" id="date2" th:value="*{date2}"
+               data-dojo-type="dijit/form/DateTextBox"
+               required="true" />
+        <br>
+        <button type="submit" data-dojo-type="dijit/form/Button" id="submitButton">Send it!</button>
+            <br><br>
+        <br><br>
+        <label th:text="'Выбранная дата от:' + *{date1} + ' до:' + *{date2} + ' Отдел номер:' + *{selectdepartment}"></label>
+        <br>
+        <div th:object="${allQuestion}">
+        <table border="1" id="question-table">
+            <tr>
+                <th>№</th>
+                <th>Вопрос</th>
+                <th>Ответ</th>
+            </tr>
+            <tr th:each="accountInfo : ${allQuestion}">
+                <td th:utext="${accountInfo.id}"></td>
+                <td th:utext="${accountInfo.question}"></td>
+                <td>
+                    <label th:text="${accountInfo.average}"></label>
+                </td>
+            </tr>
+
+        </table>
+        </div>
+        <br>
+        <script>
+            var table = dojo.byId('question-table');
+            var elem = table.getElementsByTagName('label');
+            for (var z = 0; z < elem.length; z++) {
+                var elema = elem[z];
+
+                if(z==0||z==1||z==3||z==4||z==5||z==7||z==9||z==12||z==13) {
+                    if (elema.innerHTML <= 2)
+                        elema.style.backgroundColor = '#880600';
+                    if (elema.innerHTML <= 3 && elema.innerHTML > 2)
+                        elema.style.backgroundColor = '#ff9310';
+                    if (elema.innerHTML <= 4 && elema.innerHTML > 3)
+                        elema.style.backgroundColor = '#ffff60';
+                    if (elema.innerHTML <= 5 && elema.innerHTML > 4)
+                        elema.style.backgroundColor = '#48f000';
+                }
+                else{
+                    if (elema.innerHTML <= 2)
+                        elema.style.backgroundColor = '#48f000';
+                    if (elema.innerHTML <= 3 && elema.innerHTML > 2)
+                        elema.style.backgroundColor = '#ffff60';
+                    if (elema.innerHTML <= 4 && elema.innerHTML > 3)
+                        elema.style.backgroundColor = '#ff9310';
+                    if (elema.innerHTML <= 5 && elema.innerHTML > 4)
+                        elema.style.backgroundColor = '#880600';
+
+                }
+            }
+
+              //      dojo.getElementsByName("hjk");
+              //      console.log(dojo.getElementsByName("hjk"));
+              //       i++;
+              //   var g = dojo.byId('idlabel1').innerHTML;
+              //   var g1=dojo.byId('idlabel1');
+              //   var g2=dojo.byId('idlabel2');
+              // console.log(g);
+              //   if(g>10){
+              //
+              //       g1.style.color='red';
+              //       g2.style.color='red';
+              //   }else {
+              //       g1.style.color='green';
+              //       g2.style.color='green';
+              //
+              //   }
+
+
+        </script>
+
+    </form>
+</blockquote>
+<br>
+</body>
+</html>

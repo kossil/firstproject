@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Bank</title>
+</head>
+
+<body>
+
+
+<div th:if="${errorMessage!=null}"
+	 style="color:red;font-style:italic" th:utext="${errorMessage}">..</div>
+
+<form th:action="@{/add}" th:object="${addd}" method="POST">
+	<table>
+		<tr>
+			<td>From Bank Account Id</td>
+			<td><input type="text" th:field="*{id}"/></td>
+		</tr>
+		<tr>
+		<tr>
+			<td>From Bank Account Id</td>
+			<td><input type="text" th:field="*{question}"/></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><input type="submit" value="Send"/></td>
+		</tr>
+	</table>
+</form>
+
+</body>
+</html>

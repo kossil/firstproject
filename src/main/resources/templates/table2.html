@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link rel="stylesheet" href="resources/dijit/themes/claro/claro.css" >
+    <script> dojoConfig = {parseOnLoad: true}</script>
+    <script src='resources/dojo/dojo.js'></script>
+
+    <!--<style class="igm"> body{-->
+    <!--background-color:black;-->
+    <!--}-->
+    <!--</style>>-->
+</head>
+<body class="claro">
+<script>
+
+    dojo.require("dijit.form.Button");
+    dojo.require("dijit.form.TextBox");
+    dojo.require("dijit.form.CheckBox");
+
+    require(['dijit/registry'],function sendForm(registry){
+        var form = dojo.byId("myform");
+
+        dojo.connect(form, "onsubmit", function(event){
+            // Stop the submit event since we want to control form submission.
+            dojo.stopEvent(event);
+
+            // The parameters to pass to xhrPost, the form, how to handle it, and the callbacks.
+            // Note that there isn't a url passed.  xhrPost will extract the url to call from the form's
+            //'action' attribute.  You could also leave off the action attribute and set the url of the xhrPost object
+            // either should work.
+            var xhrArgs = {
+                form: dojo.byId("myform"),
+                url:"table",
+                handleAs: "text",
+                load: function(data){
+                    dojo.byId("response").innerHTML = "Спасибо за прохождение теста!";
+
+                    registry.byId('submitButton').set('disabled', true);
+                },
+                error: function(error){
+                    dojo.byId("response").innerHTML = "Ваш результат не отправлен. Произошла ошибка " + error;
+                }
+            };
+            // Call the asynchronous xhrPost
+            dojo.byId("response").innerHTML = "Отправляем...";
+            var deferred = dojo.xhrPost(xhrArgs);
+        });
+    });
+    dojo.ready(sendForm);
+</script>
+<br>
+<blockquote>
+    <form action="/table" id="myform">
+        <table border="1">
+            <tr>
+                <th>№</th>
+                <th>Вопрос</th>
+                <th>Ответ</th>
+            </tr>
+            <tr th:each="accountInfo : ${allQuestion}">
+                <td th:utext="${accountInfo.id}"></td>
+                <td th:utext="${accountInfo.question}"></td>
+                <td>
+                    <select name="variable">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </td>
+            </tr>
+
+        </table>
+        <input type="hidden" name="department" value="2">
+        <button type="submit" data-dojo-type="dijit/form/Button" id="submitButton">Отправить!</button>
+    </form>
+</blockquote>
+<br>
+<div id="response"></div>
+</body>
+</html>
+
