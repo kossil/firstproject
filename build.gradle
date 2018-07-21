@@ -1,4 +1,5 @@
 
+
 buildscript {
     ext {
         springBootVersion = '2.0.3.RELEASE'
@@ -8,34 +9,27 @@ buildscript {
     }
     dependencies {
 
-        classpath 'org.flywaydb:flyway-gradle-plugin:3.0'
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
     }
 
+}
 
+plugins{
+    id 'org.liquibase.gradle' version '2.0.0'
 }
-plugins {
-    id "org.flywaydb.flyway" version "5.1.4"
-    id 'war'
-}
+
+
 configurations {
     shrinksafe
 }
 
-flyway {
-    url = 'jdbc:oracle:thin:@localhost:1521/XE'
-    user = 'test'
-    password = 'igm322'
-    schemas = ['schema1', 'schema2', 'schema3']
-    placeholders = [
-            'keyABC': 'valueXYZ',
-            'otherplaceholder': 'value123'
-    ]
-}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.liquibase.gradle'
 
 group = 'com.ssp'
 version = '0.0.1-SNAPSHOT'
@@ -47,17 +41,16 @@ repositories {
     mavenCentral()
 }
 
-
-
 dependencies {
-    // https://mvnrepository.com/artifact/org.springframework.webflow/spring-js
-    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile('org.liquibase:liquibase-core')
     testCompile 'junit:junit:4.12'
     compile group: 'org.springframework.webflow', name: 'spring-js', version: '2.4.7.RELEASE'
-    compile('com.oracle:ojdbc6:11.2.0.4')
+    compile files('libs/ojdbc6.jar')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-jdbc')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+
