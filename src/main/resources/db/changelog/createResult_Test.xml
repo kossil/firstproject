@@ -39,6 +39,8 @@
             />
             <column name="question15" type="number(10,0)"
             />
+            <column name="sumResult"  type="number(10,0)"
+            />
         </createTable>
     </changeSet>
 </databaseChangeLog>
