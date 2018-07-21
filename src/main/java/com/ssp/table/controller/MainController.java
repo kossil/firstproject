@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.util.List;
+import javax.servlet.ServletRequest;
 
 
 @Controller
@@ -22,14 +23,14 @@ public class MainController {
     @Autowired
     private DataBaseDAO dataBaseDAO;
 
+    @Autowired
+    private ServletRequest servletRequest;
+
     //Добавление вопроса форма
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addQuestiont(Model model) {
-
-        QuestionInfo addd = new QuestionInfo(1L,"igm?","");
-          model.addAttribute("addd",addd);
-
-        return "form";
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String adminPanel(Model model) {
+       model.addAttribute("name",servletRequest.getServerName()+":"+servletRequest.getServerPort());
+        return "admin";
     }
     //Добавление вопроса в бд
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -62,10 +63,10 @@ public class MainController {
                              @RequestParam("date1") String date1,
                              @RequestParam("date2") String date2) throws ParseException {
         ResultToCount resultToCount = new ResultToCount();
-        List<QuestionResultInfo> list = dataBaseDAO.getQuestionResult(selectDepartment,date1,date2);
+        List<QuestionResultInfo> listResult = dataBaseDAO.getQuestionResult(selectDepartment,date1,date2);
         List<QuestionInfo> listQuestion = dataBaseDAO.getQuestion();
 
-        Double[] ResultArray = resultToCount.Summary(list);
+        Double[] ResultArray = resultToCount.Summary(listResult);
         System.out.println("Параметры от админа:"+selectDepartment + " " + date1 + " " + date2);
         int i=0;
         if(ResultArray[0].isNaN()){
@@ -86,6 +87,7 @@ public class MainController {
         model.addAttribute("date2",date2);
         model.addAttribute("selectdepartment",selectDepartment);
         model.addAttribute("allQuestion",listQuestion);
+        model.addAttribute("resultQuestion",listResult);
 
         return "send";
     }

@@ -64,7 +64,7 @@ public class DataBaseDAO extends JdbcDaoSupport {
     public void WriteResultTest(String allResult, Long idDepartment) throws ParseException {
         String saveSql = "insert into Result_Test(Department,Date_Test,Question1,Question2," +
                 "Question3,Question4,Question5,Question6,Question7,Question8,Question9,Question10," +
-                "Question11,Question12,Question13,Question14,Question15)" +" values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                "Question11,Question12,Question13,Question14,Question15,SumResult)" +" values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         String[] subStr;
         String separator = ",";
@@ -81,9 +81,30 @@ public class DataBaseDAO extends JdbcDaoSupport {
         Date myDate = format.parse(dateTest);
         java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
 
+        Long sumResult=0L;
+        for(int i = 0 ; i < question_result.length ; i++){
+
+            if(i == 2||i == 6||i == 8||i == 10||i == 11||i == 14){
+                if(question_result[i] == 1)
+                    sumResult += 5;
+                if(question_result[i] == 2)
+                    sumResult += 4;
+                if(question_result[i] == 3)
+                    sumResult += 3;
+                if(question_result[i] == 4)
+                    sumResult += 2;
+                if(question_result[i] == 5)
+                    sumResult += 1;
+            }
+            else {
+                sumResult += question_result[i];
+            }
+
+        }
+
         this.getJdbcTemplate().update(saveSql,idDepartment,sqlDate,question_result[0],question_result[1],question_result[2],question_result[3],
                 question_result[4],question_result[5],question_result[6],question_result[7],question_result[8],question_result[9],question_result[10],
-                question_result[11],question_result[12],question_result[13],question_result[14]);
+                question_result[11],question_result[12],question_result[13],question_result[14],sumResult);
 
 
 

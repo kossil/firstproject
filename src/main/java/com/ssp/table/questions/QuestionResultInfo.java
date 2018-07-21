@@ -18,10 +18,11 @@ public class QuestionResultInfo {
     private Long question13;
     private Long question14;
     private Long question15;
+    private Long sumResult;
 
     public QuestionResultInfo(Long idDepartment, String date, Long question1,Long question2,Long question3,
                         Long question4,Long question5,Long question6,Long question7,Long question8,Long question9,Long question10,
-                        Long question11,Long question12,Long question13,Long question14,Long question15) {
+                        Long question11,Long question12,Long question13,Long question14,Long question15,Long sumResult) {
         super();
         this.idDepartment=idDepartment;
         this.date=date;
@@ -40,6 +41,7 @@ public class QuestionResultInfo {
         this.question13=question13;
         this.question14=question14;
         this.question15=question15;
+        this.sumResult=sumResult;
     }
 
     public Long getIdDepartment() {
@@ -176,5 +178,13 @@ public class QuestionResultInfo {
 
     public void setQuestion15(Long question15) {
         this.question15 = question15;
+    }
+
+    public Long getSumResult() {
+        return sumResult;
+    }
+
+    public void setSumResult(Long sumResult) {
+        this.sumResult = sumResult;
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
 
     <link rel="stylesheet" href="resources/dijit/themes/claro/claro.css" >
@@ -59,17 +59,65 @@
             <tr>
                 <th>№</th>
                 <th>Вопрос</th>
-                <th>Ответ</th>
+                <th>ср.знач.</th>
             </tr>
+
             <tr th:each="accountInfo : ${allQuestion}">
                 <td th:utext="${accountInfo.id}"></td>
                 <td th:utext="${accountInfo.question}"></td>
-                <td>
-                    <label th:text="${accountInfo.average}"></label>
-                </td>
+                <td><center> <label th:text="${accountInfo.average}"></label></center></td>
             </tr>
 
+
         </table>
+            <table border="1" id="tableigm">
+                <tr>
+                    <th>Вопрос 1</th>
+                    <th>Вопрос 2</th>
+                    <th>Вопрос 3</th>
+                    <th>Вопрос 4</th>
+                    <th>Вопрос 5</th>
+                    <th>Вопрос 6</th>
+                    <th>Вопрос 7</th>
+                    <th>Вопрос 8</th>
+                    <th>Вопрос 9</th>
+                    <th>Вопрос 10</th>
+                    <th>Вопрос 11</th>
+                    <th>Вопрос 12</th>
+                    <th>Вопрос 13</th>
+                    <th>Вопрос 14</th>
+                    <th>Вопрос 15</th>
+                    <th>Сумма</th>
+
+
+                </tr>
+                <tr th:each="resultquestion:  ${resultQuestion}">
+                    <td th:utext="${resultquestion.question1}"></td>
+                    <td th:utext="${resultquestion.question2}"></td>
+                    <td th:utext="${resultquestion.question3}"></td>
+                    <td th:utext="${resultquestion.question4}"></td>
+                    <td th:utext="${resultquestion.question5}"></td>
+                    <td th:utext="${resultquestion.question6}"></td>
+                    <td th:utext="${resultquestion.question7}"></td>
+                    <td th:utext="${resultquestion.question8}"></td>
+                    <td th:utext="${resultquestion.question9}"></td>
+                    <td th:utext="${resultquestion.question10}"></td>
+                    <td th:utext="${resultquestion.question11}"></td>
+                    <td th:utext="${resultquestion.question12}"></td>
+                    <td th:utext="${resultquestion.question13}"></td>
+                    <td th:utext="${resultquestion.question14}"></td>
+                    <td th:utext="${resultquestion.question15}"></td>
+                    <td><center> <label th:text="${resultquestion.sumResult} - 15"></label></center></td>
+                </tr>
+
+        </table>
+            <ul>
+                <li>1 - Абсолютно не согласен;</li>
+                <li>2 - В чем-то не согласен;</li>
+                <li>3 - Затрудняюсь ответить;</li>
+                <li>4 - Согласен до некоторой степени;</li>
+                <li>5 - полностью согласен;</li>
+            </ul>
         </div>
         <br>
         <script>
@@ -80,7 +128,7 @@
 
                 if(z==0||z==1||z==3||z==4||z==5||z==7||z==9||z==12||z==13) {
                     if (elema.innerHTML <= 2)
-                        elema.style.backgroundColor = '#880600';
+                        elema.style.backgroundColor = '#bc0600';
                     if (elema.innerHTML <= 3 && elema.innerHTML > 2)
                         elema.style.backgroundColor = '#ff9310';
                     if (elema.innerHTML <= 4 && elema.innerHTML > 3)
@@ -96,28 +144,23 @@
                     if (elema.innerHTML <= 4 && elema.innerHTML > 3)
                         elema.style.backgroundColor = '#ff9310';
                     if (elema.innerHTML <= 5 && elema.innerHTML > 4)
-                        elema.style.backgroundColor = '#880600';
+                        elema.style.backgroundColor = '#bc0600';
 
                 }
             }
-
-              //      dojo.getElementsByName("hjk");
-              //      console.log(dojo.getElementsByName("hjk"));
-              //       i++;
-              //   var g = dojo.byId('idlabel1').innerHTML;
-              //   var g1=dojo.byId('idlabel1');
-              //   var g2=dojo.byId('idlabel2');
-              // console.log(g);
-              //   if(g>10){
-              //
-              //       g1.style.color='red';
-              //       g2.style.color='red';
-              //   }else {
-              //       g1.style.color='green';
-              //       g2.style.color='green';
-              //
-              //   }
-
+            var second_table = dojo.byId('tableigm');
+            var element = second_table.getElementsByTagName('label');
+            for (var i = 0; i < element.length; i++) {
+                var localelem = element[i];
+                if(localelem.innerHTML >= 0 && localelem.innerHTML <=15)
+                    localelem.style.backgroundColor='#bc0600';
+                if(localelem.innerHTML > 15 && localelem.innerHTML <=30)
+                    localelem.style.backgroundColor='#ff9310';
+                if(localelem.innerHTML > 30 && localelem.innerHTML <=45)
+                    localelem.style.backgroundColor='#ffff60';
+                if(localelem.innerHTML > 45 && localelem.innerHTML <=60)
+                    localelem.style.backgroundColor='#48f000';
+            }
 
         </script>
 
