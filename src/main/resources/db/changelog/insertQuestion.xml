@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+<changeSet author="igm" id="322">
+    <insert tableName="questions">
+        <column name="id">1</column>
+        <column name="question">Я готов приложить усилия, даже превышающие общепринятые ожидания чтобы моя компания преуспевала</column>
+    </insert>
+    <insert tableName="questions">
+        <column name="id">2</column>
+        <column name="question">Я всегда говорю своим друзьям, что работаю в великолепной компании</column>
+    </insert>
+    <insert tableName="questions">
+        <column name="id">3</column>
+        <column name="question">Я не испытываю никакой привязанности по отношению к этой компании</column>
+    </insert>
+    <insert tableName="questions">
+        <column name="id">4</column>
+        <column name="question">Я соглашусь практически с любым назначением, лишь бы остаться работать в этой компании</column>
+    </insert>
+    <insert tableName="questions">
+        <column name="id">5</column>
+        <column name="question">Я считаю, что мои личные ценности и ценности, принятые в моей компании, очень близки</column>
+    </insert>
+    <insert tableName="questions">
+        <column name="id">6</column>
+        <column name="question">Я с гордостью заявляю другим, что являюсь частью этой компании</column>
+    </insert>
+    <insert tableName="questions">
+        <column name="id">7</column>
+        <column name="question">С таким же успехом я работал бы в любой другой компании, если бы можно было выполнять аналогичную работу</column>
+    </insert>
+    <insert tableName="questions">
+        <column name="id">8</column>
+        <column name="question">Моя компания действительно вдохновляет меня работать как можно лучше</column>
+    </insert>
+    <insert tableName="questions">
+        <column name="id">9</column>
+        <column name="question">Требуются очень незначительные изменения в моих личных обстоятельствах, чтобы я оставил работу в этой компании</column>
+    </insert>
+    <insert tableName="questions">
+        <column name="id">10</column>
+        <column name="question">Я очень рад, что выбрал именно эту компанию, когда искал работу и рассматривал другие предложения</column>
+    </insert>
+    <insert tableName="questions">
+        <column name="id">11</column>
+        <column name="question">Не имеет смысла надолго задерживаться в этой компании</column>
+    </insert>
+    <insert tableName="questions">
+        <column name="id">12</column>
+        <column name="question">Во многих случаях я не согласен с основными направлениями политики компании по отношению к своим сотрудникам</column>
+    </insert>
+    <insert tableName="questions">
+        <column name="id">13</column>
+        <column name="question">Мне действительно небезразлична судьба компании</column>
+    </insert>
+    <insert tableName="questions">
+        <column name="id">14</column>
+        <column name="question">Для меня это самая лучшая из компаний, где я мог бы работать</column>
+    </insert>
+    <insert tableName="questions">
+        <column name="id">15</column>
+        <column name="question">Решение начать работать в этой компании было, безусловно, ошибкой с моей стороны</column>
+    </insert>
+
+</changeSet>
+</databaseChangeLog>
