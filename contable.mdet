@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Devart (www.devart.com), Master-detail document file -->
+<!-- Modifying this generated file will probably render it invalid -->
+<Document>
+  <Properties>
+    <Type>Master-detail Document</Type>
+    <DatabaseProvider>a8c9171f-1f52-4698-85d8-8f58f0b59e75</DatabaseProvider>
+    <ProviderVersion>3.10.12.0</ProviderVersion>
+    <SchemaVersion>1.0</SchemaVersion>
+  </Properties>
+  <Connection Name="test@XE">
+    <Category>00000000-0000-0000-0000-000000000000</Category>
+    <ConnectionString>User Id=test;Server=XE;Unicode=True;Connection Timeout=0</ConnectionString>
+  </Connection>
+  <Views ShowAdditionalViews="False" IsLayoutActiveAttribute="False" MainViewAttribute="Design" MainViewScale="75">
+    <View Name="Design" Active="True" Visible="True">
+      <Data>
+        <Properties LocationX="-10" LocationY="-4" Scale="1" />
+        <Tables>
+          <Table Name="TEST.DEPARTMENTS" Type="Table" Left="40" Top="40" Width="173.156677246094" Height="102" Collapsed="False" IsMaster="True" FetchLimit="1000">
+            <Fields>
+              <Field Name="ID" InSelect="True" SortType="0" />
+              <Field Name="DEPARTMENT" InSelect="True" SortType="0" />
+            </Fields>
+          </Table>
+          <Table Name="TEST.INTERVIEW" Type="Table" Left="320" Top="100" Width="173.156677246094" Height="156" Collapsed="False" IsMaster="False" FetchLimit="1000">
+            <Fields>
+              <Field Name="ID_INTERVIEW" InSelect="True" SortType="0" />
+              <Field Name="DATE_INTERVIEW" InSelect="True" SortType="0" />
+              <Field Name="ID_DEPARTMENT" InSelect="True" SortType="0" />
+              <Field Name="LINK" InSelect="True" SortType="0" />
+              <Field Name="SUMMARY" InSelect="True" SortType="0" />
+            </Fields>
+          </Table>
+          <Table Name="TEST.QUESTIONS" Type="Table" Left="540" Top="10" Width="173.156677246094" Height="102" Collapsed="False" IsMaster="False" FetchLimit="1000">
+            <Fields>
+              <Field Name="ID" InSelect="True" SortType="0" />
+              <Field Name="QUESTION" InSelect="True" SortType="0" />
+            </Fields>
+          </Table>
+          <Table Name="TEST.RESULT_TEST" Type="Table" Left="610" Top="190" Width="173.156677246094" Height="120" Collapsed="False" IsMaster="False" FetchLimit="1000">
+            <Fields>
+              <Field Name="ID" InSelect="True" SortType="0" />
+              <Field Name="ID_QUESTION" InSelect="True" SortType="0" />
+              <Field Name="ANSWER" InSelect="True" SortType="0" />
+            </Fields>
+          </Table>
+        </Tables>
+        <Links>
+          <Link OutTable="TEST.DEPARTMENTS" OutField="ID" InTable="TEST.INTERVIEW" InField="ID_DEPARTMENT" />
+          <Link OutTable="TEST.INTERVIEW" OutField="ID_INTERVIEW" InTable="TEST.RESULT_TEST" InField="ID" />
+        </Links>
+      </Data>
+    </View>
+    <View Name="Data" Visible="True" />
+  </Views>
+  <Settings>
+    <Options xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PageOptions">
+      <TopLeftMargins>
+        <Width>10 mm</Width>
+        <Height>10 mm</Height>
+      </TopLeftMargins>
+      <BottomRightMargins>
+        <Width>10 mm</Width>
+        <Height>10 mm</Height>
+      </BottomRightMargins>
+      <PaperSize>
+        <Width>210 mm</Width>
+        <Height>297 mm</Height>
+      </PaperSize>
+    </Options>
+    <Options xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PrintOptions" />
+  </Settings>
+</Document>
