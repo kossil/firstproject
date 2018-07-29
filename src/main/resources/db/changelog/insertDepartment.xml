@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="igm" id="32221">
+        <insert tableName="departments">
+            <column name="id">1</column>
+            <column name="department">Первый отдел</column>
+        </insert>
+        <insert tableName="departments">
+            <column name="id">2</column>
+            <column name="department">Второй отдел</column>
+        </insert>
+        <insert tableName="departments">
+            <column name="id">3</column>
+            <column name="department">Третий отдел</column>
+        </insert>
+        <insert tableName="departments">
+            <column name="id">4</column>
+            <column name="department">Четвертый отдел</column>
+        </insert>
+        <insert tableName="departments">
+            <column name="id">5</column>
+            <column name="department">Пятый отдел</column>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class DataBaseDAO extends JdbcDaoSupport {
@@ -39,8 +40,8 @@ public class DataBaseDAO extends JdbcDaoSupport {
         // Select ba.Id, ba.Question From Questions ba Order By ba.Id
 
         SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd" );
-        String sql = "Select * From Result_Test rt Where rt.Department = " + Long.parseLong(selectDepartment) +
-                " and rt.Date_Test Between To_Date('"+date1+"','yyyy-mm-dd')"+" and To_Date('"+ date2 +"','yyyy-mm-dd')" ;
+        String sql = "Select inter.Summary From Interview inter Where  inter.Id_Department = " + Long.parseLong(selectDepartment) +
+                " and inter.Date_Interview Between To_Date('"+date1+"','yyyy-mm-dd')"+" and To_Date('"+ date2 +"','yyyy-mm-dd')" ;
 
         Object[] params = new Object[] {};
         QuestionResultMapper mapper = new QuestionResultMapper();
@@ -61,15 +62,26 @@ public class DataBaseDAO extends JdbcDaoSupport {
         this.getJdbcTemplate().update(saveSql,id,query);
     }
 
-    public void WriteResultTest(String allResult, Long idDepartment) throws ParseException {
-        String saveSql = "insert into Result_Test(Department,Date_Test,Question1,Question2," +
-                "Question3,Question4,Question5,Question6,Question7,Question8,Question9,Question10," +
-                "Question11,Question12,Question13,Question14,Question15,SumResult)" +" values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    public void ChangeDBQuestion(Long id, String query){
+        String Sql = "update Questions set Question=? where id=?";
+        this.getJdbcTemplate().update(Sql,query,id);
+    }
 
-        String[] subStr;
-        String separator = ",";
+    public void DeleteDBQuestion(Long id){
+        String Sql = "delete from Questions where id=?";
+        this.getJdbcTemplate().update(Sql,id);
+    }
+
+    public void WriteResultTest(String allResult, Long idDepartment) throws ParseException {
+        String saveSql = "insert into Result_Test(Id,Id_Question,Answer)" +" values (?,?,?)";
+        String saveSqlSecond = "insert into Interview(Id_Interview,Date_Interview,Id_Department,Link,Summary)" +" values (?,?,?,?,?)";
+        UUID uuid = UUID.randomUUID();
+        String randomUUIDString = uuid.toString();
+
         Date date = new Date();
         String dateTest = String.format("%tF", date);
+        String[] subStr;
+        String separator = ",";
         subStr = allResult.split(separator);
         Long[] question_result = new Long[subStr.length];
 
@@ -81,9 +93,10 @@ public class DataBaseDAO extends JdbcDaoSupport {
         Date myDate = format.parse(dateTest);
         java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
 
-        Long sumResult=0L;
-        for(int i = 0 ; i < question_result.length ; i++){
 
+        Long sumResult=0L;
+
+        for(int i = 0 ; i < question_result.length ; i++){
             if(i == 2||i == 6||i == 8||i == 10||i == 11||i == 14){
                 if(question_result[i] == 1)
                     sumResult += 5;
@@ -99,13 +112,11 @@ public class DataBaseDAO extends JdbcDaoSupport {
             else {
                 sumResult += question_result[i];
             }
-
         }
-
-        this.getJdbcTemplate().update(saveSql,idDepartment,sqlDate,question_result[0],question_result[1],question_result[2],question_result[3],
-                question_result[4],question_result[5],question_result[6],question_result[7],question_result[8],question_result[9],question_result[10],
-                question_result[11],question_result[12],question_result[13],question_result[14],sumResult);
-
+        this.getJdbcTemplate().update(saveSqlSecond,randomUUIDString,sqlDate,idDepartment,13,sumResult);
+        for(int i=0;i<question_result.length;i++){
+            this.getJdbcTemplate().update(saveSql,randomUUIDString,i+1,question_result[i]);
+        }
 
 
     }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="dada" id="457547">
+        <createTable tableName="interview"
+                     remarks="опрос для одного человека">
+            <column name="id_interview" type="nvarchar2(40)">
+                <constraints nullable="false" primaryKey="true"
+                             primaryKeyName="PK_INTERVIEW_ID"/>
+            </column>
+
+            <column name="date_interview" type="date">
+            </column>
+
+            <column name="id_department" type="number(10,0)">
+            </column>
+            <column name="link" type="number(10,0)">
+            </column>
+            <column name="summary" type="number(10,0)">
+            </column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

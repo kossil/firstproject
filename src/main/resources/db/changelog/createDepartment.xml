@@ -2,15 +2,17 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
-    <changeSet author="igm" id="156323">
-        <createTable tableName="questions"
-                     remarks="ид вопроса для поиска">
+    <changeSet author="igm" id="121">
+
+        <createTable tableName="departments"
+                     remarks="отделы и информация о них">
+
             <column name="id" type="number(10,0)">
                 <constraints nullable="false" primaryKey="true"
-                             primaryKeyName="PK_QUESTIONS_ID"/>
+                             primaryKeyName="PK_DEPARTMENTS_ID"/>
             </column>
-            <column name="question" type="nvarchar2(120)"
-                    remarks="Здесь хранятся вопросы"/>
+            <column name="department" type="nvarchar2(30)"
+                    remarks="имена отделов"/>
         </createTable>
 
     </changeSet>

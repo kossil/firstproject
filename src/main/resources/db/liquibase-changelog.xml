@@ -8,6 +8,10 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <include file="db/changelog/createQuestions.xml" />
-    <include file="db/changelog/createResult_Test.xml" />
+    <include file="db/changelog/createDepartment.xml" />
+    <include file="db/changelog/createInterview.xml" />
+    <include file="db/changelog/createResult.xml" />
    <include file="db/changelog/insertQuestion.xml"/>
+    <include file="db/changelog/insertDepartment.xml"/>
+   <include file="db/changelog/addFK.xml" />
 </databaseChangeLog>
