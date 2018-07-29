@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
-
+    <!--<script src="//ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js"-->
+            <!--data-dojo-config="async: true"></script>-->
     <link rel="stylesheet" href="resources/dijit/themes/claro/claro.css" >
     <script> dojoConfig = {parseOnLoad: true}</script>
     <script src='resources/dojo/dojo.js'></script>
@@ -59,11 +60,13 @@
             <tr>
                 <th>№</th>
                 <th>Вопрос</th>
+                <th>Ср.знач.</th>
             </tr>
 
             <tr th:each="accountInfo : ${allQuestion}" >
                 <td th:utext="${accountInfo.id}"></td>
                 <td th:utext="${accountInfo.question}"></td>
+                <td ><center> <label th:utext="${accountInfo.average}"></label></center></td>
             </tr>
 
         </table>

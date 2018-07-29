@@ -1,11 +1,8 @@
 package com.ssp.table.controller;
 
 import com.ssp.table.WebSecurityConfig;
-import com.ssp.table.questions.QuestionInfo;
-import com.ssp.table.questions.DataBaseDAO;
+import com.ssp.table.questions.*;
 
-import com.ssp.table.questions.QuestionResultInfo;
-import com.ssp.table.questions.ResultToCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -55,6 +52,25 @@ public class MainController {
         return "admin";
     }
 
+    @RequestMapping(value = "/admin", method = RequestMethod.POST)
+    public String test(Model model){
+        firstURL = resultToCount.RandomGen("1");
+        secondURL = resultToCount.RandomGen("2");
+        thirdURL = resultToCount.RandomGen("3");
+        if(flag==0)
+            flag = 1;
+        else flag=0;
+        model.addAttribute("name",servletRequest.getServerName()+":"+servletRequest.getServerPort());
+        if(flag==1){
+            model.addAttribute("first",firstURL);
+            model.addAttribute("second",secondURL);
+            model.addAttribute("third",thirdURL);
+            model.addAttribute("butt","Завершить");}
+        else
+            model.addAttribute("butt","Начать");
+        return "admin";
+    }
+
     @RequestMapping(value="{id}", method = RequestMethod.GET)
     public String method(@PathVariable("id") String id, Model model) {
 
@@ -77,24 +93,7 @@ public class MainController {
     }
 
     //Добавление вопроса форма
-    @RequestMapping(value = "/admin", method = RequestMethod.POST)
-    public String test(Model model){
-        firstURL = resultToCount.RandomGen("1");
-        secondURL = resultToCount.RandomGen("2");
-        thirdURL = resultToCount.RandomGen("3");
-        if(flag==0)
-        flag = 1;
-        else flag=0;
-        model.addAttribute("name",servletRequest.getServerName()+":"+servletRequest.getServerPort());
-        if(flag==1){
-        model.addAttribute("first",firstURL);
-        model.addAttribute("second",secondURL);
-        model.addAttribute("third",thirdURL);
-        model.addAttribute("butt","Завершить");}
-        else
-            model.addAttribute("butt","Начать");
-        return "admin";
-    }
+
     //работа с вопросами в бд(изменение удаление добавление)
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addQuestiontToDBget(Model model ) {
@@ -155,30 +154,38 @@ public class MainController {
         ResultToCount resultToCount = new ResultToCount();
         List<QuestionResultInfo> listResult = dataBaseDAO.getQuestionResult(selectDepartment,date1,date2);
         List<QuestionInfo> listQuestion = dataBaseDAO.getQuestion();
-
+        List<AVGinfo> avGinfos = dataBaseDAO.getAVGResult(selectDepartment,date1,date2);
         Double[] ResultArray = resultToCount.Summary(listResult);
         System.out.println("Параметры от админа:"+selectDepartment + " " + date1 + " " + date2);
 
-//          int i=0;
-//        if(ResultArray[0].isNaN()){
-//
-//            for (QuestionInfo questionInfo : listQuestion) {
-//                questionInfo.setAverage("Таких записей нет");
-//                i++;
-//            }
-//        }
-//        else {
-//
-//            for (QuestionInfo questionInfo : listQuestion) {
-//                questionInfo.setAverage(String.format("%.2f", ResultArray[i]));
-//                i++;
-//            }
-//        }
+        int i=0;
+        Double[] igm = new Double[avGinfos.size()];
+        for (AVGinfo avGinfo : avGinfos) {
+            igm[i] = avGinfo.getAvg();
+            i++;
+
+        }
+
+        if(avGinfos.size()==0){
+
+            for (QuestionInfo questionInfo : listQuestion) {
+                questionInfo.setAverage("Таких записей нет");
+            }
+        }
+        else {
+            i=0;
+        for (QuestionInfo questionInfo : listQuestion) {
+            questionInfo.setAverage(String.format("%.2f",igm[i]));
+            i++;
+        }
+            }
         model.addAttribute("date1",date1);
         model.addAttribute("date2",date2);
         model.addAttribute("selectdepartment",selectDepartment);
         model.addAttribute("allQuestion",listQuestion);
         model.addAttribute("resultQuestion",listResult);
+        model.addAttribute("avginf",avGinfos);
+
 
         return "send";
     }
@@ -190,6 +197,11 @@ public class MainController {
         dataBaseDAO.WriteResultTest(allResult,Long.parseLong(department));
         System.out.println(allResult+" "+ department);
         return "table1";
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String testinh() {
+        return "test";
     }
 
 }

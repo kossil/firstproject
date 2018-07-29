@@ -24,7 +24,20 @@ public class DataBaseDAO extends JdbcDaoSupport {
         this.dataSource=dataSource;
     }
 
+    public List<AVGinfo> getAVGResult(String selectDepartment , String date1 , String date2) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd" );
+        String sql = "Select rt.ID_QUESTION,AVG(rt.ANSWER) From RESULT_TEST rt,Interview inter WHERE inter.ID_INTERVIEW=rt.ID and " +
+                " inter.Id_Department = " + Long.parseLong(selectDepartment) + " and inter.Date_Interview Between To_Date('"+date1+"','yyyy-mm-dd')"+
+                " and To_Date('"+ date2 +"','yyyy-mm-dd')  GROUP BY rt.ID_QUESTION ORDER BY rt.ID_QUESTION" ;
 
+        Object[] params = new Object[] {};
+        avgMapper mapper = new avgMapper();
+        List<AVGinfo> list = this.getJdbcTemplate().query(sql, params, mapper);
+
+        return list;
+    }
+
+//Получение вопросов
     public List<QuestionInfo> getQuestion() {
         // Select ba.Id, ba.Question From Questions ba Order By ba.Id
         String sql = QuestionMapper.BASE_SQL;
@@ -36,9 +49,8 @@ public class DataBaseDAO extends JdbcDaoSupport {
         return list;
     }
 
+//Результаты тестирования(сумма каждого участника)
     public List<QuestionResultInfo> getQuestionResult(String selectDepartment , String date1 , String date2) throws ParseException {
-        // Select ba.Id, ba.Question From Questions ba Order By ba.Id
-
         SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd" );
         String sql = "Select inter.Summary From Interview inter Where  inter.Id_Department = " + Long.parseLong(selectDepartment) +
                 " and inter.Date_Interview Between To_Date('"+date1+"','yyyy-mm-dd')"+" and To_Date('"+ date2 +"','yyyy-mm-dd')" ;
@@ -50,28 +62,22 @@ public class DataBaseDAO extends JdbcDaoSupport {
         return list;
     }
 
+    //Добавление вопроса в бд
     public void WriteDBQuestion(Long id, String query){
-
-       // JdbcTemplate template = new JdbcTemplate(dataSource);
-        //this.getJdbcTemplate().batchUpdate(saveSql,) //forMore
-        //template.update(saveSql,query);
-        // String sqlUpdate = "Update Bank_Account set Balance = ? where Id = ?";
-        // this.getJdbcTemplate().update(sqlUpdate,200, 1);
-
         String saveSql = "insert into Questions(Id,Question)" +" values (?,?)";
         this.getJdbcTemplate().update(saveSql,id,query);
     }
-
+    //Изменение вопроса в бд
     public void ChangeDBQuestion(Long id, String query){
         String Sql = "update Questions set Question=? where id=?";
         this.getJdbcTemplate().update(Sql,query,id);
     }
-
+    //Удаление вопроса с бд
     public void DeleteDBQuestion(Long id){
         String Sql = "delete from Questions where id=?";
         this.getJdbcTemplate().update(Sql,id);
     }
-
+    //Запись результатов в две табл.
     public void WriteResultTest(String allResult, Long idDepartment) throws ParseException {
         String saveSql = "insert into Result_Test(Id,Id_Question,Answer)" +" values (?,?,?)";
         String saveSqlSecond = "insert into Interview(Id_Interview,Date_Interview,Id_Department,Link,Summary)" +" values (?,?,?,?,?)";
@@ -93,9 +99,7 @@ public class DataBaseDAO extends JdbcDaoSupport {
         Date myDate = format.parse(dateTest);
         java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
 
-
         Long sumResult=0L;
-
         for(int i = 0 ; i < question_result.length ; i++){
             if(i == 2||i == 6||i == 8||i == 10||i == 11||i == 14){
                 if(question_result[i] == 1)
@@ -113,12 +117,11 @@ public class DataBaseDAO extends JdbcDaoSupport {
                 sumResult += question_result[i];
             }
         }
+
         this.getJdbcTemplate().update(saveSqlSecond,randomUUIDString,sqlDate,idDepartment,13,sumResult);
         for(int i=0;i<question_result.length;i++){
             this.getJdbcTemplate().update(saveSql,randomUUIDString,i+1,question_result[i]);
         }
-
-
     }
 
 }
