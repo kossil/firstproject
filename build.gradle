@@ -61,5 +61,5 @@ task unzip(type: Copy) {
     from zipTree(zipFile)
     into outputDir
 }
-unzip.enabled=true
+unzip.execute()
 
