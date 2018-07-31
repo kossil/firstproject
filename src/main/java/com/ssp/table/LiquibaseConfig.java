@@ -33,6 +33,8 @@ public class LiquibaseConfig {
         liquibase.setChangeLog(changelogFile);
         liquibase.setDataSource(dataSource);
         liquibase.setShouldRun(true);
+        if(liquibase.isDropFirst())
+        liquibase.setDropFirst(true);
 
         // Verbose logging
         Map<String, String> params = new HashMap<>();

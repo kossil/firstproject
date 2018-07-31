@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="dada" id="3223223">
+        <addForeignKeyConstraint baseColumnNames="id"
+                                 baseTableName="result_test"
+                                 constraintName="fk_address_int"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id_interview"
+                                 referencedTableName="interview"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_department"
+                                 baseTableName="interview"
+                                 constraintName="fk_address_dep"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="departments"/>
+    </changeSet>
+</databaseChangeLog>

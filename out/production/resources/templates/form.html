@@ -1,25 +1,40 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Bank</title>
+	<link rel="stylesheet" href="resources/dijit/themes/claro/claro.css" >
+	<script> dojoConfig = {parseOnLoad: true}</script>
+	<script src='resources/dojo/dojo.js'></script>
+	<title>change</title>
 </head>
 
-<body>
+<body class="claro">
+<script>
 
+    dojo.require("dijit.form.Button");
+    dojo.require("dijit.form.TextBox");
+    dojo.require("dijit.form.CheckBox");
+
+</script>
 
 <div th:if="${errorMessage!=null}"
 	 style="color:red;font-style:italic" th:utext="${errorMessage}">..</div>
 
-<form th:action="@{/add}" th:object="${addd}" method="POST">
+<form  method="POST">
+	<label for="change">Выберите отдел:</label>
+	<select name="change" id="change" data-dojo-type="dijit/form/Select">
+		<option value="1">Добавить</option>
+		<option value="2">Изменить</option>
+		<option value="3">Удалить</option>
+	</select>
 	<table>
 		<tr>
 			<td>Ид вопроса</td>
-			<td><input type="text" th:field="*{id}"/></td>
+			<td><input type="text" name="idQue" id="idQue" /></td>
 		</tr>
 		<tr>
 		<tr>
 			<td>Вопрос</td>
-			<td><input type="text" th:field="*{question}"/></td>
+			<td><input type="text" name="question" id="question"/></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
@@ -29,7 +44,17 @@
 		</tr>
 	</table>
 
-
 </form>
+<table border="1" id="question-table">
+
+	<tr>
+		<th>Ид</th>
+		<th>Вопрос</th>
+	</tr>
+	<tr th:each="questionInfo : ${allQuestion}">
+		<td th:utext="${questionInfo.id}"></td>
+		<td th:utext="${questionInfo.question}"></td>
+
+</table>
 </body>
 </html>

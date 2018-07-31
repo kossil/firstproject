@@ -2,7 +2,7 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
-<changeSet author="igm" id="322">
+<changeSet author="igm" id="3223222" >
     <insert tableName="questions">
         <column name="id">1</column>
         <column name="question">Я готов приложить усилия, даже превышающие общепринятые ожидания чтобы моя компания преуспевала</column>
@@ -63,6 +63,5 @@
         <column name="id">15</column>
         <column name="question">Решение начать работать в этой компании было, безусловно, ошибкой с моей стороны</column>
     </insert>
-
 </changeSet>
 </databaseChangeLog>

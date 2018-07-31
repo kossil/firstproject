@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
-
-    <link rel="stylesheet" href="resources/dijit/themes/claro/claro.css" >
+    <!--<script src="//ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js"-->
+            <!--data-dojo-config="async: true"></script>-->
+    <link rel="stylesheet" href="/resources/dijit/themes/claro/claro.css" >
     <script> dojoConfig = {parseOnLoad: true}</script>
-    <script src='resources/dojo/dojo.js'></script>
+    <script src='/resources/dojo/dojo.js'></script>
 
     <!--<style class="igm"> body{-->
         <!--background-color:black;-->
@@ -59,17 +60,33 @@
             <tr>
                 <th>№</th>
                 <th>Вопрос</th>
-                <th>Ответ</th>
+                <th>Ср.знач.</th>
             </tr>
-            <tr th:each="accountInfo : ${allQuestion}">
+
+            <tr th:each="accountInfo : ${allQuestion}" >
                 <td th:utext="${accountInfo.id}"></td>
                 <td th:utext="${accountInfo.question}"></td>
-                <td>
-                    <label th:text="${accountInfo.average}"></label>
-                </td>
+                <td ><center> <label th:utext="${accountInfo.average}"></label></center></td>
             </tr>
 
         </table>
+            <table border="1" id="tableigm">
+
+                <tr  >
+                    <!--<td th:utext="${resultquestion.idQuestion}"></td>-->
+                    <!--<td th:utext="${resultquestion.answer}"></td>-->
+                    <td>Результаты</td>
+                    <td><center> <label th:each="resultquestion:${resultQuestion}" th:text="${resultquestion.sumResult} - 15+'    '"></label></center></td>
+                </tr>
+
+        </table>
+            <ul>
+                <li>1 - Абсолютно не согласен;</li>
+                <li>2 - В чем-то не согласен;</li>
+                <li>3 - Затрудняюсь ответить;</li>
+                <li>4 - Согласен до некоторой степени;</li>
+                <li>5 - полностью согласен;</li>
+            </ul>
         </div>
         <br>
         <script>
@@ -80,7 +97,7 @@
 
                 if(z==0||z==1||z==3||z==4||z==5||z==7||z==9||z==12||z==13) {
                     if (elema.innerHTML <= 2)
-                        elema.style.backgroundColor = '#880600';
+                        elema.style.backgroundColor = '#bc0600';
                     if (elema.innerHTML <= 3 && elema.innerHTML > 2)
                         elema.style.backgroundColor = '#ff9310';
                     if (elema.innerHTML <= 4 && elema.innerHTML > 3)
@@ -96,28 +113,23 @@
                     if (elema.innerHTML <= 4 && elema.innerHTML > 3)
                         elema.style.backgroundColor = '#ff9310';
                     if (elema.innerHTML <= 5 && elema.innerHTML > 4)
-                        elema.style.backgroundColor = '#880600';
+                        elema.style.backgroundColor = '#bc0600';
 
                 }
             }
-
-              //      dojo.getElementsByName("hjk");
-              //      console.log(dojo.getElementsByName("hjk"));
-              //       i++;
-              //   var g = dojo.byId('idlabel1').innerHTML;
-              //   var g1=dojo.byId('idlabel1');
-              //   var g2=dojo.byId('idlabel2');
-              // console.log(g);
-              //   if(g>10){
-              //
-              //       g1.style.color='red';
-              //       g2.style.color='red';
-              //   }else {
-              //       g1.style.color='green';
-              //       g2.style.color='green';
-              //
-              //   }
-
+            var second_table = dojo.byId('tableigm');
+            var element = second_table.getElementsByTagName('label');
+            for (var i = 0; i < element.length; i++) {
+                var localelem = element[i];
+                if(localelem.innerHTML >= 0 && localelem.innerHTML <=15)
+                    localelem.style.backgroundColor='#bc0600';
+                if(localelem.innerHTML > 15 && localelem.innerHTML <=30)
+                    localelem.style.backgroundColor='#ff9310';
+                if(localelem.innerHTML > 30 && localelem.innerHTML <=45)
+                    localelem.style.backgroundColor='#ffff60';
+                if(localelem.innerHTML > 45 && localelem.innerHTML <=60)
+                    localelem.style.backgroundColor='#48f000';
+            }
 
         </script>
 

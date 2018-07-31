@@ -146,6 +146,7 @@ public class MainController {
         return "send";
     }
 
+
 // прием жижи
     @RequestMapping(value = "/send", method = RequestMethod.POST)
     public String sendDataDB(Model model,@RequestParam("selectdepartment") String selectDepartment,

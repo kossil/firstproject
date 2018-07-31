@@ -1,59 +1,25 @@
 
 <!DOCTYPE HTML>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
+    <script> dojoConfig = {parseOnLoad: true}</script>
+    <script src='resources/dojo/dojo.js'></script>
     <meta charset="utf-8">
-    <title>Demo: Basic Declarative Chart</title>
-    <link rel="stylesheet" href="style.css" media="screen">
 </head>
 <body>
-<h1>Demo: Basic Declarative Chart</h1>
 
-<!-- create the chart -->
-<div
-        data-dojo-type="dojox/charting/widget/Chart"
-        data-dojo-props="theme:dojox.charting.themes.Claro" id="viewsChart" style="width: 550px; height: 550px;">
+<p>Ссылки для отделов</p>
 
-    <!-- Pie Chart: add the plot -->
-    <div class="plot" name="default" type="Pie" radius="200" fontColor="#000" labelOffset="-20"></div>
+<p th:utext="'Первый отдел: '+${name}+'/'+${first}"></p>
+<p th:utext="'Второй отдел: '+${name}+'/'+${second}"></p>
+<p th:utext="'Третий отдел: '+${name}+'/'+${third}"></p>
+<br>
+<br>
+<p><a href="send">Просмотреть результаты тестирования</a></p>
+<form action="/admin" method="post">
+    <button  type="submit" th:text="${butt}">
 
-    <!-- pieData is the data source -->
-    <div class="series" name="Last Week's Visits" array="chartData"></div>
-</div>
-
-<!-- load dojo and provide config via data attribute -->
-<script src="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/dojo.js" data-dojo-config="isDebug: 1, async: 1, parseOnLoad: 1"></script>
-<script>
-
-    // x and y coordinates used for easy understanding of where they should display
-    // Data represents website visits over a week period
-    chartData = [
-        { x: 1, y: 2 },
-        { x: 1, y: 2 },
-        { x: 1, y: 2 },
-        { x: 1, y: 1 },
-        { x: 1, y: 1 },
-        { x: 1, y: 1 },
-        { x: 1, y: 1 }
-    ];
-
-    require([
-        // Require the widget parser
-        "dojo/parser",
-
-        // Require the basic 2d chart resource
-        "dojox/charting/widget/Chart",
-
-        // Require the theme of our choosing
-        "dojox/charting/themes/Claro",
-
-        // Charting plugins:
-
-        // 	Require the Pie type of Plot
-        "dojox/charting/plot2d/Pie"
-
-    ]);
-
-</script>
+    </button>
+</form>
 </body>
 </html>
