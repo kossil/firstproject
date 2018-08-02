@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <!--<script src="//ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js"-->
@@ -7,23 +7,30 @@
     <script> dojoConfig = {parseOnLoad: true}</script>
     <script src='/resources/dojo/dojo.js'></script>
 
+        <!-- Леха накидал тут -->
+    <link rel="stylesheet" href="resources/css/style_send.css">
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css">
+
+    <script src="resources/js/bootstrap.min.js"></script>
+
     <!--<style class="igm"> body{-->
         <!--background-color:black;-->
     <!--}-->
     <!--</style>>-->
 </head>
 <body class="claro">
+    <div class="content">
 <script>
 
-    dojo.require("dijit.form.Button");
+    // dojo.require("dijit.form.Button");
     dojo.require("dijit.form.TextBox");
     dojo.require("dijit.form.CheckBox");
 
 </script>
-<br>
-<blockquote>
+ <div class="form_cont igm">
     <form action="/send" id="myform" method="post" >
-
+        
+        <div class="edit">
         <label for="selectdepartment">Выберите отдел:</label>
         <select name="selectdepartment" id="selectdepartment" data-dojo-type="dijit/form/Select">
             <option value="1">1</option>
@@ -32,35 +39,36 @@
             <option value="4">4</option>
             <option value="5">5</option>
         </select>
-
-        <br>
-        <br>
-        <br>
-
-        <label for="date1">Результаты от:</label>
+        </div>
+        
+        <div class="edit">
+        <label for="date1">Результаты от: </label>
         <input type="text" name="date1" id="date1" th:value="*{date1}"
                data-dojo-type="dijit/form/DateTextBox"
                required="true" />
+        </div>
 
-        <br>
-        <br>
-        <br>
+         <div class="edit">
         <label for="date2">Результаты до:</label>
         <input type="text" name="date2" id="date2" th:value="*{date2}"
                data-dojo-type="dijit/form/DateTextBox"
                required="true" />
         <br>
-        <button type="submit" data-dojo-type="dijit/form/Button" id="submitButton">Send it!</button>
-            <br><br>
-        <br><br>
+        <button  type="submit" data-dojo-type="dijit/form/Button" id="submitButton">Отправить</button>
+        </div>
+
         <label th:text="'Выбранная дата от:' + *{date1} + ' до:' + *{date2} + ' Отдел номер:' + *{selectdepartment}"></label>
-        <br>
+        </form>
+    </div>
+
+        <div class="form_cont">
+
         <div th:object="${allQuestion}">
         <table border="1" id="question-table">
             <tr>
-                <th>№</th>
-                <th>Вопрос</th>
-                <th>Ср.знач.</th>
+               <th class="number">№</th>
+                <th class="question">Вопрос</th>
+                <th class="answer">Ср. знач</th>
             </tr>
 
             <tr th:each="accountInfo : ${allQuestion}" >
@@ -70,13 +78,14 @@
             </tr>
 
         </table>
-            <table border="1" id="tableigm">
+
+        <table border="1" id="tableigm" class="tableigm">
 
                 <tr  >
                     <!--<td th:utext="${resultquestion.idQuestion}"></td>-->
                     <!--<td th:utext="${resultquestion.answer}"></td>-->
-                    <td>Результаты</td>
-                    <td><center> <label th:each="resultquestion:${resultQuestion}" th:text="${resultquestion.sumResult} - 15+'    '"></label></center></td>
+                    <td class="result">Результаты</td>
+                    <td><center> <label th:each="resultquestion:${resultQuestion}" th:text="${resultquestion.sumResult}"></label></center></td>
                 </tr>
 
         </table>
@@ -97,7 +106,7 @@
 
                 if(z==0||z==1||z==3||z==4||z==5||z==7||z==9||z==12||z==13) {
                     if (elema.innerHTML <= 2)
-                        elema.style.backgroundColor = '#bc0600';
+                        elema.style.backgroundColor = '#FD6D6D';
                     if (elema.innerHTML <= 3 && elema.innerHTML > 2)
                         elema.style.backgroundColor = '#ff9310';
                     if (elema.innerHTML <= 4 && elema.innerHTML > 3)
@@ -113,7 +122,7 @@
                     if (elema.innerHTML <= 4 && elema.innerHTML > 3)
                         elema.style.backgroundColor = '#ff9310';
                     if (elema.innerHTML <= 5 && elema.innerHTML > 4)
-                        elema.style.backgroundColor = '#bc0600';
+                        elema.style.backgroundColor = '#FD6D6D';
 
                 }
             }
@@ -121,20 +130,22 @@
             var element = second_table.getElementsByTagName('label');
             for (var i = 0; i < element.length; i++) {
                 var localelem = element[i];
-                if(localelem.innerHTML >= 0 && localelem.innerHTML <=15)
-                    localelem.style.backgroundColor='#bc0600';
-                if(localelem.innerHTML > 15 && localelem.innerHTML <=30)
-                    localelem.style.backgroundColor='#ff9310';
+
+                if(localelem.innerHTML >= 15 && localelem.innerHTML <=30)
+                    localelem.style.backgroundColor='#FD6D6D';
                 if(localelem.innerHTML > 30 && localelem.innerHTML <=45)
-                    localelem.style.backgroundColor='#ffff60';
+                    localelem.style.backgroundColor='#ff9310';
                 if(localelem.innerHTML > 45 && localelem.innerHTML <=60)
+                    localelem.style.backgroundColor='#ffff60';
+                if(localelem.innerHTML > 60 && localelem.innerHTML <=75)
                     localelem.style.backgroundColor='#48f000';
+                localelem.innerHTML+="&nbsp&nbsp";
             }
 
         </script>
 
     </form>
-</blockquote>
-<br>
+</div>
+</div>
 </body>
 </html>

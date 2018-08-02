@@ -1,9 +1,19 @@
-
+﻿
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <link rel="stylesheet" href="resources/dijit/themes/claro/claro.css" >
+    <link rel="stylesheet" href="resources/dijit/themes/tundra/tundra.css" >
+
+
+    <!-- Леха накидал тут -->
+    <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css">
+
+    <script src="resources/js/bootstrap.min.js"></script>
+
+
+
     <script> dojoConfig = {parseOnLoad: true}</script>
     <script src='resources/dojo/dojo.js'></script>
 
@@ -12,19 +22,24 @@
     <!--}-->
     <!--</style>>-->
 </head>
-<body class="claro">
-<h2 align="center">Анкета</h2>
-<b><p>Инструкция</p></b>
-<p>Вам предложено несколько вопросов, выражающих разнообразные чувства, которые Вы может испытывать к нашей компании.
-    Определите свои собственные чувства. Для этого выберите приведенный вариант:
-</p>
-<ul>
-    <li>1 - Абсолютно не согласен;</li>
-    <li>2 - В чем-то не согласен;</li>
-    <li>3 - Затрудняюсь ответить;</li>
-    <li>4 - Согласен до некоторой степени;</li>
-    <li>5 - полностью согласен;</li>
-</ul>
+<body class="tundra">
+<div class="content">
+
+    <h2 align="center">Анкета</h2>
+    <b><p>Инструкция</p></b>
+
+<div class="description">
+    <p>Вам предложено несколько вопросов, выражающих разнообразные чувства, которые Вы может испытывать к нашей компании.
+        Определите свои собственные чувства. Для этого выберите приведенный вариант:
+    </p>
+    <ul>
+        <li>1 - Абсолютно не согласен;</li>
+        <li>2 - В чем-то не согласен;</li>
+        <li>3 - Затрудняюсь ответить;</li>
+        <li>4 - Согласен до некоторой степени;</li>
+        <li>5 - полностью согласен;</li>
+    </ul>
+</div>
 <script>
 
     dojo.require("dijit.form.Button");
@@ -57,14 +72,14 @@
     });
     dojo.ready(sendForm);
 </script>
-<br>
-<blockquote>
+
+    <div class="form_cont">
     <form action="/table" id="myform">
         <table border="1">
             <tr>
-                <th>№</th>
-                <th>Вопрос</th>
-                <th>Ответ</th>
+                <th class="number">№</th>
+                <th class="question">Вопрос</th>
+                <th class="answer">Ответ</th>
             </tr>
             <tr th:each="questionInfo : ${allQuestion}">
                 <td th:utext="${questionInfo.id}"></td>
@@ -83,11 +98,11 @@
 
         </table>
         <input type="hidden" name="department" value="1">
-       <button type="submit" data-dojo-type="dijit/form/Button" id="submitButton" >Отправить!</button>
+      <center> <button data-dojo-type="dijit/form/Button" type="submit" id="submitButton" >Отправить</button></center>
     </form>
-</blockquote>
-<br>
+</div>
 <div id="response"></div>
+</div>
 </body>
 </html>
 

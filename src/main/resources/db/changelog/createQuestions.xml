@@ -2,7 +2,7 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
-    <changeSet author="igm" id="3223226">
+    <changeSet author="igm" id="4">
         <createTable tableName="questions"
                      remarks="ид вопроса для поиска">
             <column name="id" type="number(10,0)">
@@ -11,6 +11,10 @@
             </column>
             <column name="question" type="nvarchar2(120)"
                     remarks="Здесь хранятся вопросы"/>
+            <column name="meaning" type="number(10,0)"
+                    remarks="Если 0 то не надо реверс ответ, если 1 надо реверс ответ(1=5 и т.д.)"/>
+
+
         </createTable>
 
     </changeSet>
