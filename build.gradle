@@ -54,7 +54,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-security")
 
 }
-
 task unzip(type: Copy) {
     def zipFile = file('libs/dojo-release.zip')
     def outputDir = file('src/main/webapp/resources')
@@ -62,4 +61,5 @@ task unzip(type: Copy) {
     into outputDir
 }
 unzip.execute()
+
 
