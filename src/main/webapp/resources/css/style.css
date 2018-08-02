@@ -1,0 +1,86 @@
+body{
+
+	padding: 5px;
+	margin: 0;
+}
+.content{
+	position: relative;
+	left: 27%;
+
+}
+.content{
+	width: 600px;
+}
+.description{
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	max-width: 600px;
+	padding: 10px;
+}
+.form_cont{
+	margin-top: 20px;
+	box-shadow: 0 0 5px rgba(0,0,0,0.5);
+	max-width: 600px;
+	padding: 10px;
+}
+
+.send{
+	width: 90px;
+	margin-top: 10px;
+	position: relative;
+	right: -84.5%;
+}
+
+.send {
+  color: #fff; /* цвет текста */
+  background: #737373; /* фон кнопки */
+  border: 0;
+  padding: 2px;
+} 
+.send:hover { background: #464646; } /* при наведении курсора мышки */
+.send:active { background: #353535; } /* при нажатии */
+
+
+.number{
+	width: 45px;
+}
+.question{
+	text-align: center;
+	width: 500px;
+}
+.answer{
+	width: 45px;
+}
+
+
+
+table {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+  border-collapse: collapse;
+  color: #686461;
+}
+caption {
+  padding: 10px;
+  color: white;
+  background: #8FD4C1;
+  font-size: 18px;
+  text-align: left;
+  font-weight: bold;
+}
+th {
+  border-bottom: 3px solid #B9B29F;
+  padding: 20px;
+  text-align: left;
+}
+td {
+  padding: 10px;
+}
+tr:nth-child(odd) {
+  background: white;
+}
+tr:nth-child(even) {
+  background: #E8E6D1;
+}
+select{
+	width: 45px;
+	background: #E8E6D1;
+}
