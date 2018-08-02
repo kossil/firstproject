@@ -24,6 +24,20 @@ public class DataBaseDAO extends JdbcDaoSupport {
         this.dataSource=dataSource;
     }
 
+
+//Получение вопросов
+    public List<QuestionInfo> getQuestion() {
+        // Select ba.Id, ba.Question, ba.Meaning From Questions ba Order By ba.Id
+        String sql = QuestionMapper.BASE_SQL;
+
+        Object[] params = new Object[] {};
+        QuestionMapper mapper = new QuestionMapper();
+        List<QuestionInfo> list = this.getJdbcTemplate().query(sql, params, mapper);
+
+        return list;
+    }
+
+    //Получение средних баллов по каждому вопросу
     public List<AVGinfo> getAVGResult(String selectDepartment , String date1 , String date2) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd" );
         String sql = "Select rt.ID_QUESTION,AVG(rt.ANSWER) From RESULT_TEST rt,Interview inter WHERE inter.ID_INTERVIEW=rt.ID and " +
@@ -33,18 +47,6 @@ public class DataBaseDAO extends JdbcDaoSupport {
         Object[] params = new Object[] {};
         avgMapper mapper = new avgMapper();
         List<AVGinfo> list = this.getJdbcTemplate().query(sql, params, mapper);
-
-        return list;
-    }
-
-//Получение вопросов
-    public List<QuestionInfo> getQuestion() {
-        // Select ba.Id, ba.Question From Questions ba Order By ba.Id
-        String sql = QuestionMapper.BASE_SQL;
-
-        Object[] params = new Object[] {};
-        QuestionMapper mapper = new QuestionMapper();
-        List<QuestionInfo> list = this.getJdbcTemplate().query(sql, params, mapper);
 
         return list;
     }
@@ -62,23 +64,25 @@ public class DataBaseDAO extends JdbcDaoSupport {
         return list;
     }
 
-    //Добавление вопроса в бд
+    //Добавление вопроса в бд Questions
     public void WriteDBQuestion(Long id, String query){
         String saveSql = "insert into Questions(Id,Question)" +" values (?,?)";
         this.getJdbcTemplate().update(saveSql,id,query);
     }
-    //Изменение вопроса в бд
+    //Изменение вопроса в бд Questions
     public void ChangeDBQuestion(Long id, String query){
         String Sql = "update Questions set Question=? where id=?";
         this.getJdbcTemplate().update(Sql,query,id);
     }
-    //Удаление вопроса с бд
+
+    //Удаление вопроса с бд Questions
     public void DeleteDBQuestion(Long id){
         String Sql = "delete from Questions where id=?";
         this.getJdbcTemplate().update(Sql,id);
     }
-    //Запись результатов в две табл.
-    public void WriteResultTest(String allResult, Long idDepartment) throws ParseException {
+
+    //Запись результатов в две табл. Interview and Result_Test
+    public void WriteResultTest(String allResult, Long idDepartment,List<QuestionInfo> questionInfoList) throws ParseException {
         String saveSql = "insert into Result_Test(Id,Id_Question,Answer)" +" values (?,?,?)";
         String saveSqlSecond = "insert into Interview(Id_Interview,Date_Interview,Id_Department,Link,Summary)" +" values (?,?,?,?,?)";
         UUID uuid = UUID.randomUUID();
@@ -100,22 +104,24 @@ public class DataBaseDAO extends JdbcDaoSupport {
         java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
 
         Long sumResult=0L;
-        for(int i = 0 ; i < question_result.length ; i++){
-            if(i == 2||i == 6||i == 8||i == 10||i == 11||i == 14){
-                if(question_result[i] == 1)
+        int count = 0;
+        for (QuestionInfo questionInfo : questionInfoList) {
+            if(questionInfo.getMeaning() == 1){
+                if(question_result[count] == 1)
                     sumResult += 5;
-                if(question_result[i] == 2)
+                if(question_result[count] == 2)
                     sumResult += 4;
-                if(question_result[i] == 3)
+                if(question_result[count] == 3)
                     sumResult += 3;
-                if(question_result[i] == 4)
+                if(question_result[count] == 4)
                     sumResult += 2;
-                if(question_result[i] == 5)
+                if(question_result[count] == 5)
                     sumResult += 1;
             }
-            else {
-                sumResult += question_result[i];
+            else{
+                sumResult += question_result[count];
             }
+            count++;
         }
 
         this.getJdbcTemplate().update(saveSqlSecond,randomUUIDString,sqlDate,idDepartment,13,sumResult);

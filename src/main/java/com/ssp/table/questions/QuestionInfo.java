@@ -5,13 +5,15 @@ public class QuestionInfo {
     private String question;
     private Long id;
     private String average;
+    private Long meaning;
     public QuestionInfo() {
     }
-    public QuestionInfo(Long id, String question,String average) {
+    public QuestionInfo(Long id, String question,String average,Long meaning) {
         super();
         this.id = id;
         this.question = question;
-        this.average=average;
+        this.average = average;
+        this.meaning = meaning;
 
     }
 
@@ -38,4 +40,13 @@ public class QuestionInfo {
     public void setAverage(String average) {
         this.average = average;
     }
+
+    public Long getMeaning() {
+        return meaning;
+    }
+
+    public void setMeaning(Long meaning) {
+        this.meaning = meaning;
+    }
 }
+

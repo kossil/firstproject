@@ -38,6 +38,7 @@ public class MainController {
         return "login";
     }
 
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String mainPage(Model model) {
         model.addAttribute("name",servletRequest.getServerName()+":"+servletRequest.getServerPort());
@@ -57,17 +58,24 @@ public class MainController {
         firstURL = resultToCount.RandomGen("1");
         secondURL = resultToCount.RandomGen("2");
         thirdURL = resultToCount.RandomGen("3");
-        if(flag==0)
+        if(flag==0) {
             flag = 1;
-        else flag=0;
+        }
+        else{
+            flag=0;
+        }
+
         model.addAttribute("name",servletRequest.getServerName()+":"+servletRequest.getServerPort());
+
         if(flag==1){
             model.addAttribute("first",firstURL);
             model.addAttribute("second",secondURL);
             model.addAttribute("third",thirdURL);
-            model.addAttribute("butt","Завершить");}
-        else
-            model.addAttribute("butt","Начать");
+            model.addAttribute("butt","Завершить");
+        }
+        else {
+            model.addAttribute("butt", "Начать");
+        }
         return "admin";
     }
 
@@ -134,11 +142,6 @@ public class MainController {
 //тестовый вариант сенда с жижей
     @RequestMapping(value = "/send", method = RequestMethod.GET)
     public String resendDataDB(Model model) {
-       // List<QuestionResultInfo> list = dataBaseDAO.getQuestionResult();
-       // for (QuestionResultInfo questionResultInfo : list) {
-        //    System.out.println(questionResultInfo.getIdDepartment() + " " + questionResultInfo.getDate() + " "
-        //            + questionResultInfo.getQuestion1()+ " " + questionResultInfo.getQuestion2());
-      //  }
         List<QuestionInfo> list = dataBaseDAO.getQuestion();
         model.addAttribute("allQuestion",list);
         model.addAttribute("igm","3");
@@ -152,11 +155,9 @@ public class MainController {
     public String sendDataDB(Model model,@RequestParam("selectdepartment") String selectDepartment,
                              @RequestParam("date1") String date1,
                              @RequestParam("date2") String date2) throws ParseException {
-        ResultToCount resultToCount = new ResultToCount();
         List<QuestionResultInfo> listResult = dataBaseDAO.getQuestionResult(selectDepartment,date1,date2);
         List<QuestionInfo> listQuestion = dataBaseDAO.getQuestion();
         List<AVGinfo> avGinfos = dataBaseDAO.getAVGResult(selectDepartment,date1,date2);
-        Double[] ResultArray = resultToCount.Summary(listResult);
         System.out.println("Параметры от админа:"+selectDepartment + " " + date1 + " " + date2);
 
         int i=0;
@@ -194,15 +195,10 @@ public class MainController {
     @RequestMapping(value = "/table", method = RequestMethod.POST)
     public String tableDBSand(@RequestParam("variable") String allResult,
                               @RequestParam("department") String department) throws ParseException {
-
-        dataBaseDAO.WriteResultTest(allResult,Long.parseLong(department));
+        List<QuestionInfo> listQuestion = dataBaseDAO.getQuestion();
+        dataBaseDAO.WriteResultTest(allResult,Long.parseLong(department),listQuestion);
         System.out.println(allResult+" "+ department);
         return "table1";
-    }
-
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String testinh() {
-        return "test";
     }
 
 }
