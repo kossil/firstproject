@@ -7,16 +7,10 @@
     <script> dojoConfig = {parseOnLoad: true}</script>
     <script src='/resources/dojo/dojo.js'></script>
 
-        <!-- Леха накидал тут -->
     <link rel="stylesheet" href="resources/css/style_send.css">
     <link rel="stylesheet" href="resources/css/bootstrap.min.css">
-
     <script src="resources/js/bootstrap.min.js"></script>
 
-    <!--<style class="igm"> body{-->
-        <!--background-color:black;-->
-    <!--}-->
-    <!--</style>>-->
 </head>
 <body class="claro">
     <div class="content">
@@ -31,8 +25,8 @@
     <form action="/send" id="myform" method="post" >
         
         <div class="edit">
-        <label for="selectdepartment">Выберите отдел:</label>
-        <select name="selectdepartment" id="selectdepartment" data-dojo-type="dijit/form/Select">
+        <label for="selectDepartment">Выберите отдел:</label>
+        <select name="selectDepartment" id="selectDepartment" data-dojo-type="dijit/form/Select">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -42,15 +36,15 @@
         </div>
         
         <div class="edit">
-        <label for="date1">Результаты от: </label>
-        <input type="text" name="date1" id="date1" th:value="*{date1}"
+        <label for="dateFrom">Результаты от: </label>
+        <input type="text" name="dateFrom" id="dateFrom" th:value="*{date1}"
                data-dojo-type="dijit/form/DateTextBox"
                required="true" />
         </div>
 
          <div class="edit">
-        <label for="date2">Результаты до:</label>
-        <input type="text" name="date2" id="date2" th:value="*{date2}"
+        <label for="dateTo">Результаты до:</label>
+        <input type="text" name="dateTo" id="dateTo" th:value="*{date2}"
                data-dojo-type="dijit/form/DateTextBox"
                required="true" />
         <br>
@@ -82,8 +76,6 @@
         <table border="1" id="tableigm" class="tableigm">
 
                 <tr  >
-                    <!--<td th:utext="${resultquestion.idQuestion}"></td>-->
-                    <!--<td th:utext="${resultquestion.answer}"></td>-->
                     <td class="result">Результаты</td>
                     <td><center> <label th:each="resultquestion:${resultQuestion}" th:text="${resultquestion.sumResult}"></label></center></td>
                 </tr>
@@ -123,7 +115,6 @@
                         elema.style.backgroundColor = '#ff9310';
                     if (elema.innerHTML <= 5 && elema.innerHTML > 4)
                         elema.style.backgroundColor = '#FD6D6D';
-
                 }
             }
             var second_table = dojo.byId('tableigm');

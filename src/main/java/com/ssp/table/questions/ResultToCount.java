@@ -11,12 +11,12 @@ public class ResultToCount {
 
         Double[] ResultArray = new Double[15];
         Arrays.fill(ResultArray,0.0);
-        int i=0;
+        int i = 0;
         for (QuestionResultInfo questionResultInfo : list) {
             i++;
         }
-        for(int k=0;k<ResultArray.length;k++){
-            ResultArray[k]=ResultArray[k]/i;
+        for(int k = 0; k < ResultArray.length; k++){
+            ResultArray[k] = ResultArray[k]/i;
         }
         return ResultArray;
     }

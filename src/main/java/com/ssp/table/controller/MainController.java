@@ -33,12 +33,18 @@ public class MainController {
     private int flag = 0;
 
 
+    /*
+    Метод отвечает за логирование на страницы
+    /,/add,/admin,/send
+    */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String logggg(Model model) {
         return "login";
     }
 
-
+/*
+Метод необходим для доступа к генерации ссылок, и просмотру результатов тестирования
+ */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String mainPage(Model model) {
         model.addAttribute("name",servletRequest.getServerName()+":"+servletRequest.getServerPort());
@@ -47,27 +53,30 @@ public class MainController {
             model.addAttribute("second",secondURL);
             model.addAttribute("third",thirdURL);
         }
-        if(flag==0)
+        if(flag == 0)
             model.addAttribute("butt","Начать");
         else model.addAttribute("butt","Завершить");
         return "admin";
     }
-
+    /*
+    Метод необходим для  обработки информации от страницы  / ,
+    а именно генерация ссылок и начало и завершение тестирования
+     */
     @RequestMapping(value = "/admin", method = RequestMethod.POST)
     public String test(Model model){
         firstURL = resultToCount.RandomGen("1");
         secondURL = resultToCount.RandomGen("2");
         thirdURL = resultToCount.RandomGen("3");
-        if(flag==0) {
+        if(flag == 0) {
             flag = 1;
         }
         else{
-            flag=0;
+            flag = 0;
         }
 
         model.addAttribute("name",servletRequest.getServerName()+":"+servletRequest.getServerPort());
 
-        if(flag==1){
+        if(flag == 1){
             model.addAttribute("first",firstURL);
             model.addAttribute("second",secondURL);
             model.addAttribute("third",thirdURL);
@@ -79,14 +88,18 @@ public class MainController {
         return "admin";
     }
 
-    @RequestMapping(value="{id}", method = RequestMethod.GET)
+    /*
+    Метод отвечает за доступ к страницам тестирования(рандомно сгенерированным),
+    и отвечает за доступ к страницам которых нет (404)
+     */
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public String method(@PathVariable("id") String id, Model model) {
 
         List<QuestionInfo> list = dataBaseDAO.getQuestion();
         model.addAttribute("allQuestion",list);
 
         if(id.equals(firstURL)){
-        System.out.println("the url value : "+id );
+        System.out.println("the url value : "+ id );
         return "table1";
         }
         if(id.equals(secondURL)){
@@ -100,9 +113,8 @@ public class MainController {
         return "notfound";
     }
 
-    //Добавление вопроса форма
-
-    //работа с вопросами в бд(изменение удаление добавление)
+  /*  Добавление вопроса форма
+    работа с вопросами в бд(изменение удаление добавление)*/
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addQuestiontToDBget(Model model ) {
 
@@ -111,35 +123,39 @@ public class MainController {
 
         return "form";
     }
-
+    /*  Добавление вопроса форма
+      работа с вопросами в бд(изменение удаление добавление) Post
+      @change - отвечает за выбранный вариант изменения удалить, изменить, добавить
+      @idQue - ид вопроса
+      @question - содержание вопроса
+      @meaning - смысл вопроса*/
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addQuestiontToDB(Model model,
                                    @RequestParam("change") String change,
                                    @RequestParam("idQue") String idQue,
-                                   @RequestParam("question") String question) {
+                                   @RequestParam("question") String question,
+                                   @RequestParam("meaning") String meaning){
 
-         //  dataBaseDAO.WriteDBQuestion(addd.getId(),addd.getQuestion());
-       // model.addAttribute("addd",addd);
-        //Добавить
+        // Добавить
         if(Integer.parseInt(change) == 1) {
-            dataBaseDAO.WriteDBQuestion(Long.parseLong(idQue),question);
+            dataBaseDAO.WriteDBQuestion(Long.parseLong(idQue),question,Long.parseLong(meaning));
         }
         //Изменить
         if(Integer.parseInt(change) == 2) {
-            dataBaseDAO.ChangeDBQuestion(Long.parseLong(idQue),question);
+            dataBaseDAO.ChangeDBQuestion(Long.parseLong(idQue),question,Long.parseLong(meaning));
         }
         //Delete
         if(Integer.parseInt(change) == 3) {
             dataBaseDAO.DeleteDBQuestion(Long.parseLong(idQue));
         }
-        System.out.println(change+" "+idQue+" "+question);
+        System.out.println(change + " " + idQue + " " + question);
         List<QuestionInfo> list = dataBaseDAO.getQuestion();
         model.addAttribute("allQuestion",list);
 
         return "form";
     }
 
-//тестовый вариант сенда с жижей
+//доступ к просмотру результатов
     @RequestMapping(value = "/send", method = RequestMethod.GET)
     public String resendDataDB(Model model) {
         List<QuestionInfo> list = dataBaseDAO.getQuestion();
@@ -150,39 +166,44 @@ public class MainController {
     }
 
 
-// прием жижи
+/*
+доступ к спросмотру результатов
+@selectDepartment - отвечает за выбранный отдел на данный момент 1-3
+@dateFrom начальный промежуток между датами поиска
+@dateTo конечный промежуток даты
+ */
     @RequestMapping(value = "/send", method = RequestMethod.POST)
-    public String sendDataDB(Model model,@RequestParam("selectdepartment") String selectDepartment,
-                             @RequestParam("date1") String date1,
-                             @RequestParam("date2") String date2) throws ParseException {
-        List<QuestionResultInfo> listResult = dataBaseDAO.getQuestionResult(selectDepartment,date1,date2);
+    public String sendDataDB(Model model,@RequestParam("selectDepartment") String selectDepartment,
+                             @RequestParam("dateFrom") String dateFrom,
+                             @RequestParam("dateTo") String dateTo) throws ParseException {
+        List<QuestionResultInfo> listResult = dataBaseDAO.getQuestionResult(selectDepartment,dateFrom,dateTo);
         List<QuestionInfo> listQuestion = dataBaseDAO.getQuestion();
-        List<AVGinfo> avGinfos = dataBaseDAO.getAVGResult(selectDepartment,date1,date2);
-        System.out.println("Параметры от админа:"+selectDepartment + " " + date1 + " " + date2);
+        List<AVGinfo> avGinfos = dataBaseDAO.getAVGResult(selectDepartment,dateFrom,dateTo);
+        System.out.println("Параметры от админа:"+selectDepartment + " " + dateFrom + " " + dateTo);
 
-        int i=0;
+        int i = 0;
         Double[] igm = new Double[avGinfos.size()];
         for (AVGinfo avGinfo : avGinfos) {
             igm[i] = avGinfo.getAvg();
             i++;
-
         }
 
-        if(avGinfos.size()==0){
+        if(avGinfos.size() == 0){
 
             for (QuestionInfo questionInfo : listQuestion) {
                 questionInfo.setAverage("Таких записей нет");
             }
         }
         else {
-            i=0;
+
+            i = 0;
         for (QuestionInfo questionInfo : listQuestion) {
             questionInfo.setAverage(String.format("%.2f",igm[i]));
             i++;
         }
-            }
-        model.addAttribute("date1",date1);
-        model.addAttribute("date2",date2);
+        }
+        model.addAttribute("dateFrom",dateFrom);
+        model.addAttribute("dateTo",dateTo);
         model.addAttribute("selectdepartment",selectDepartment);
         model.addAttribute("allQuestion",listQuestion);
         model.addAttribute("resultQuestion",listResult);
@@ -191,13 +212,13 @@ public class MainController {
 
         return "send";
     }
-
+// обработка и отправление результатов тестирования в БД
     @RequestMapping(value = "/table", method = RequestMethod.POST)
     public String tableDBSand(@RequestParam("variable") String allResult,
                               @RequestParam("department") String department) throws ParseException {
         List<QuestionInfo> listQuestion = dataBaseDAO.getQuestion();
         dataBaseDAO.WriteResultTest(allResult,Long.parseLong(department),listQuestion);
-        System.out.println(allResult+" "+ department);
+        System.out.println(allResult + " " + department);
         return "table1";
     }
 

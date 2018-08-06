@@ -8,8 +8,6 @@ public class QuestionResultInfo {
         this.sumResult = sumResult;
     }
 
-
-
     public Long getSumResult() {
         return sumResult;
     }
